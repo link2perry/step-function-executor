@@ -1,0 +1,131 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+plugins:
+  - serverless-step-functions
+  - serverless-prune-plugin
+
+service:
+  name: testService
+
+custom:
+  prune:
+    automatic: true
+    number: 3
+
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 60
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+    KMS_KEY: 12345
+
+functions:
+
+  stepOne:
+    handler: lambdas/step-one/src/index.handler
+    environment:
+      CONFIG: ${file(./lambdas/step-one/src/serverless.${opt:stage}.yml):environment.CONFIG}
+
+  stepTwo:
+    handler: lambdas/step-two/src/index.handler
+
+stepFunctions:
+  stateMachines:
+    TestService:
+      name: TestService-${opt:stage}
+      definition:
+        Comment: "This tests the viability of running step functions locally"
+        StartAt: StepOne
+        States:
+             
+          StepOne:
+            Type: Task
+            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-stepOne
+            ResultPath: $.params
+            Next: Anything
+          
+          Anything:
+            Type: Pass
+            Next: Prep Wait Time
+
+          Prep Wait Time:
+            Type: Pass
+            Result: 2
+            ResultPath: $.context.waitSeconds
+            Next: My Wait Step
+
+          My Wait Step:
+            Type: Wait
+            SecondsPath: $.context.waitSeconds
+            Next: Choose
+
+          Choose:
+            Type: Choice
+            Choices:
+            - Variable: $.context.formulaId
+              StringEquals: "a0b5B000001vmVK"
+              Next: SuperFly
+            Default: Wait More
+
+          Wait More:
+            Type: Wait
+            Seconds: 4
+            Next: Fail
+
+          SuperFly:
+            Type: Parallel
+            Branches: 
+            - StartAt: A1
+              States:
+                A1:
+                  Type: Pass
+                  Result: "A1 complete"
+                  ResultPath: $.context.parallel.result
+                  Next: A1_1
+                
+                A1_1:
+                  Type: Pass
+                  Result: "A1_1 complete"
+                  ResultPath: $.context.parallel.result
+                  OutputPath: $.context.parallel
+                  End: true
+            
+            - StartAt: B1
+              States:
+                B1:
+                  Type: Pass
+                  Result: "B1 complete"
+                  ResultPath: $.context.parallel
+                  Next: B1_1
+                
+                B1_1:
+                  Type: Pass
+                  Result: "B1_1 complete"
+                  End: true
+            ResultPath: $.context.superFlyResults
+            Next: StepTwo
+
+          StepTwo:
+            Type: Task
+            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:SalesforceService-${opt:stage}-stepTwo
+            ResultPath: $.context.anything
+            Next: Success
+
+          Fail:
+            Type: Fail
+
+          Success:
+            Type: Succeed
+
+resources:
+  Outputs:
+    Spfts:
+      Value:
+        Ref: TestServiceDash${opt:stage}
+
+package:
+  exclude:
+    - .serverless/**

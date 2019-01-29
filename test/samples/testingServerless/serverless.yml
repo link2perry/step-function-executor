@@ -1,0 +1,40 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+plugins:
+  - serverless-step-functions
+  - serverless-prune-plugin
+
+service:
+  name: testService
+
+custom:
+  prune:
+    automatic: true
+    number: 3
+  dev:
+    bucket: 'my-dev-bucket'
+  test:
+    bucket: 'my-test-bucket'
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 60
+  serviceName: ${self:service.name}
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+    KMS_KEY: 12345
+    BUCKET: ${self:custom.${opt:stage}.bucket}
+  stepOneConfig: ${file(../lambdas/step-one/src/serverless.test.yml)}
+  stepOneConfig2: ${file(../lambdas/step-one/src/serverless.${opt:stage}.yml)}
+  stepOneConfig3: ${file(../lambdas/step-one/src/serverless.${opt:stage}.yml):environment.CONFIG}
+  dbConfig:
+    name: 'ccna-tis-${env:stage}'
+
+functions:
+
+  stepOne:
+    handler: lambdas/step-one/src/index.handler
+    environment:
+      CONFIG: ${file(../lambdas/step-one/src/serverless.${opt:stage}.yml):environment.CONFIG}

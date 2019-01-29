@@ -1,0 +1,23 @@
+{
+  "name": "@sei-atl/step-function-executor",
+  "version": "0.2.11",
+  "description": "",
+  "main": "lib.js",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0"
+  },
+  "scripts": {
+    "test": "mocha \"./test/active/*.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.382.0",
+    "chalk": "^2.4.2",
+    "moment": "^2.23.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.3",
+    "yamljs": "^0.3.0"
+  }
+}

@@ -1,0 +1,11 @@
+region: us-east-1
+accountId: 353114732066    
+awsKmsKeyId: c4deb956-bbb8-4d05-a9b3-884ff6d04407
+environment:
+    CONFIG: AQICAHiz6cK5HJTtT5UgqQ2+gKVF9c/sFDAAp7xOJnTGyGUFywGG5INaK9bFPBiWOpkX3A9AAAAAujCBtwYJKoZIhvcNAQcGoIGpMIGmAgEAMIGgBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDBDl6u/ghOUkputd1gIBEIBzkdlr7DGov4IIV9Ud4nOQLQ/vmOpG4CjO4AgLUBPmFd+X3KDZIuiL1MXL6QtP2lwu7jmGiyTNIe5A4GkkrPr+85bx7Qj7bYzF4JoKJGmiwb9tpehVjnHf/jLEbwD/33EuvUcAAk9msJ964TzlvMv0V5ny8A==
+vpc:
+    securityGroupIds: [sg-635ecf13]
+    subnetIds: [subnet-6ad19c66, subnet-a6e80799, subnet-fa1f55d6]
+retries:
+    sfdc: {interval: 5, backoff: 1, maxAttempts: 5}
+    default: {interval: 2, backoff: 1.5, maxAttempts: 5}
