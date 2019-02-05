@@ -25,7 +25,7 @@ provider:
 functions:
 
   stepOne:
-    handler: lambdas/step-one/src/index.handler
+    handler: lambdas/step-one/src/index.customHandler
     environment:
       CONFIG: ${file(./lambdas/step-one/src/serverless.${opt:stage}.yml):environment.CONFIG}
 

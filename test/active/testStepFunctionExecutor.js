@@ -1,6 +1,6 @@
 let Serverless = require('../../lib/Serverless');
 
-describe.skip('Testing StepFunction Execution', function() {
+describe('Testing StepFunction Execution', function() {
 	this.timeout(300000);
 	it('runs', function(done) {
 		
