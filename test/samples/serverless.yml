@@ -110,7 +110,7 @@ stepFunctions:
 
           StepTwo:
             Type: Task
-            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:SalesforceService-${opt:stage}-stepTwo
+            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-stepTwo
             ResultPath: $.context.anything
             Next: Success
 
