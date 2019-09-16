@@ -40,7 +40,6 @@ stepFunctions:
         Comment: "This tests the viability of running step functions locally"
         StartAt: StepOne
         States:
-             
           StepOne:
             Type: Task
             Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-stepOne

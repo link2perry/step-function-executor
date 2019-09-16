@@ -1,10 +1,10 @@
 let Serverless = require('../../lib/Serverless');
 
-describe('Testing StepFunction Execution', function() {
+describe.only('Testing StepFunction Execution', function() {
 	this.timeout(300000);
 	it('runs', function(done) {
 		
-		let serverless = new Serverless({ verbose: true, generateTests: false });
+		let serverless = new Serverless({ verbose: true, generateTests: true });
 		serverless.load('../samples/serverless.yml', {
 			stage: 'test'
 		}, {
