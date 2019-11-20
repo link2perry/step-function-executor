@@ -1,6 +1,6 @@
 {
   "name": "@sei-atl/step-function-executor",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "description": "",
   "main": "lib.js",
   "devDependencies": {
