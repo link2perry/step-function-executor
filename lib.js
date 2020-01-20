@@ -3,5 +3,6 @@ module.exports = {
   states: require('./lib/states'),
   ObjectUtil: require('./lib/ObjectUtil'),
   Serverless: require('./lib/Serverless'),
-  StepFunction: require('./lib/StepFunction')
+  StepFunction: require('./lib/StepFunction'),
+  TestWriter: require('./lib/TestWriter')
 }
