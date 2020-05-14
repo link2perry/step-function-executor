@@ -1,7 +1,5 @@
-let moment = require('moment');
-let $ = require('cheerio');
 
 exports.customHandler = (event, context, callback) => {
-	console.log('ran at:', moment());
+	console.log('ran step one');
 	callback(null, 'some nice params');
 };

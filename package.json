@@ -1,6 +1,6 @@
 {
   "name": "@sei-atl/step-function-executor",
-  "version": "0.2.19",
+  "version": "0.3.0",
   "description": "",
   "main": "lib.js",
   "devDependencies": {
@@ -17,6 +17,7 @@
     "app-root-path": "^2.2.1",
     "aws-sdk": "^2.382.0",
     "chalk": "^2.4.2",
+    "es6-promisify": "^6.1.1",
     "moment": "^2.24.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.3",

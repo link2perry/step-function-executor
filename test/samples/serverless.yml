@@ -16,7 +16,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs12.x
   timeout: 60
   environment:
     STAGE: ${opt:stage, 'dev'}
@@ -27,7 +27,7 @@ functions:
   stepOne:
     handler: lambdas/step-one/src/index.customHandler
     environment:
-      CONFIG: ${file(./lambdas/step-one/src/serverless.${opt:stage}.yml):environment.CONFIG}
+      CONFIG: ${file(./lambdas/step-one/src/env.${opt:stage}.yml):environment.CONFIG}
 
   stepTwo:
     handler: lambdas/step-two/src/index.handler
@@ -42,7 +42,7 @@ stepFunctions:
         States:
           StepOne:
             Type: Task
-            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-stepOne
+            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-stepOne
             ResultPath: $.params
             Next: Anything
           
